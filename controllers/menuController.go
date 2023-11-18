@@ -10,10 +10,10 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"gopkg.in/mgo.v2/bson"
 )
 
 var menuCollection *mongo.Collection = database.OpenCollection(database.Client, "menu")
@@ -108,7 +108,7 @@ func UpdateMenu() gin.HandlerFunc {
 				updateObj = append(updateObj, bson.E{"menu", menu.Name})
 			}
 			if menu.Category != "" {
-				updateObj = append(updateObj, bson.E{"menu", menu.Name})
+				updateObj = append(updateObj, bson.E{"menu", menu.Category})
 			}
 
 			menu.Updated_at, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
